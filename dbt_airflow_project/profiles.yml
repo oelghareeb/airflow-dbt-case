@@ -1,0 +1,7 @@
+dbt_airflow_project:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: '/workspaces/airflow-dbt-case/dbt_airflow_project/dbt_airflow_project.duckdb'
+      threads: 24
