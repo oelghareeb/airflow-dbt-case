@@ -1,0 +1,30 @@
+{
+  "name": "Airflow & dbt Lab Environment",
+  "image": "mcr.microsoft.com/devcontainers/python:1-3.10-bullseye",
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "python.defaultInterpreterPath": "/usr/local/bin/python"
+      },
+      "extensions": [
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "innoverio.vscode-dbt-power-user"
+      ]
+    }
+  },
+  "containerEnv": {
+    "AIRFLOW_HOME": "/home/vscode/airflow",
+    "AIRFLOW__WEBSERVER__ENABLE_PROXY_FIX": "true",
+    "AIRFLOW__CORE__LOAD_EXAMPLES": "false",
+    "DBT_PROFILES_DIR": "${containerWorkspaceFolder}/dbt_project"
+  },
+  "postCreateCommand": "pip install --upgrade pip && pip install \"apache-airflow[celery]==2.10.4\" --constraint \"https://raw.githubusercontent.com/apache/airflow/constraints-2.10.4/constraints-3.10.txt\" && pip install dbt-duckdb duckdb duckcli pandas && airflow db migrate && airflow users create --username admin --firstname Lab --lastname User --role Admin --email admin@example.com --password admin",
+  "portsAttributes": {
+    "8080": {
+      "label": "Airflow Webserver",
+      "onAutoForward": "notify"
+    }
+  },
+  "remoteUser": "vscode"
+}
